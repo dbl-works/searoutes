@@ -1,0 +1,9 @@
+# macOS Filesystem
+.DS_Store
+
+
+# developer specific files
+.env
+.vscode/settings.json
+/.idea
+
