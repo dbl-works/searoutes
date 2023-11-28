@@ -89,7 +89,7 @@ docker build -t dblworks/searoutes:$TAGNAME .
 On a ARM chip (for a x86 target):
 
 ```shell
-docker build -t dblworks/searoutes:$TAGNAME . --platform amd64
+docker build -t dblworks/searoutes:$TAGNAME . --platform linux/amd64
 ```
 
 Publish:
