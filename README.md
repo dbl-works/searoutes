@@ -1,18 +1,17 @@
-# Original Repo
+# Searoutes
 
-https://github.com/eurostat/searoute
-
+Based on [Github/eurostat/searoute](https://github.com/eurostat/searoute).
 
 To simplify deploy, we pulled in the [SeaRoute-war](https://jarcasting.de/artifacts/eu.europa.ec.eurostat/searoute-war/)
 and removed all other files from the original repository.
 
 > Eurostat is the statistical office of the European Union. This repository provides with open resources (prototypes, proofs of concept,...) developed in-house.
 
+## Description
 
-# Searoutes
 ## API
 
-```
+```shell
 GET   http://localhost:5017/seaws?opos=174.8,-36.8&dpos=121.8,31.2&res=5
 ```
 
@@ -51,10 +50,10 @@ Returns
 }
 ```
 
-
 ## Local Testing
 
 Build a docker image
+
 ```shell
 docker build -t localhost/searoutes:3.6 .
 ```
@@ -67,10 +66,9 @@ docker run -it --rm -p 5017:5017 localhost/searoutes:3.6
 
 (NOTE: on ECS, we default to exposing ports in the 5xxx range for internal side-car containers)
 
-
 ## Building & Publishing
 
-https://hub.docker.com/repository/docker/dblworks/searoutes
+[Docker/dblworks/searoutes](https://hub.docker.com/r/dblworks/searoutes)
 
 ```shell
 docker pull dblworks/searoutes:3.6
@@ -83,6 +81,7 @@ export TAGNAME=3.6
 Build:
 
 On a x86 chip
+
 ```shell
 docker build -t dblworks/searoutes:$TAGNAME .
 ```
@@ -92,7 +91,6 @@ On a ARM chip (for a x86 target):
 ```shell
 docker build -t dblworks/searoutes:$TAGNAME . --platform amd64
 ```
-
 
 Publish:
 
