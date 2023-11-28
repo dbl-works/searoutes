@@ -3,16 +3,23 @@
 # most other versions break the build as well. Test carefully when upgrading, especially
 # test the main endpoint: /seaws?opos=174.8,-36.8&dpos=121.8,31.2&res=5
 #
-FROM tomcat:9.0.68-jre17-temurin-focal
+FROM tomcat:9-jre17-temurin-focal
 
-RUN mkdir -p /usr/local/tomcat/webapps/
-RUN rm -rf /usr/local/tomcat/webapps/*
-ADD searoute-war-3.6.war /usr/local/tomcat/webapps/ROOT.war
+# ensure the system packages are up to date
+# to reduce number of potential vulnerabilities
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# use custom server config
-# e.g. we expose side-car containers on ports 5xxx on ECS
-RUN rm -rf /usr/local/tomcat/conf/server.xml
-ADD server.xml /usr/local/tomcat/conf/server.xml
+# remove the default webapps and logs to keep image small
+RUN rm -rf /usr/local/tomcat/webapps/* /usr/local/tomcat/logs/*
+
+
+COPY searoute-war-3.6.war /usr/local/tomcat/webapps/ROOT.war
+# use custom server config which includes a health check endpoint
+# required in a containerized environment
+COPY server.xml /usr/local/tomcat/conf/server.xml
 
 EXPOSE 5017
 
